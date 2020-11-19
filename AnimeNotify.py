@@ -9,6 +9,11 @@ from sys import exit
 
 apiPath = "https://api.jikan.moe/v3" 
 
+def jsonParser(dic):
+    # takes dict as param
+    # dic has json data
+    for key in dic.keys:
+        print(key+":"+dic[key])
 
 def searchAnime():
     animeName = input("Enter Name of anime: ")
