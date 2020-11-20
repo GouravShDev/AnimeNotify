@@ -5,9 +5,17 @@ from requests import get
 from json import loads
 # Convert json String to python Object
 from sys import exit
+# exit with a exit code
+from pynotifier import Notification
+# create notification
+from os import name, getcwd, system
+# get name of os, execute shell, get cwd
+from crontab import CronTab
+# schedule script
 
-
-apiPath = "https://api.jikan.moe/v3" 
+API = "https://api.jikan.moe/v3" 
+ICON_NAME="" # just name no extension
+SCHEDULE_SCRIPT=""
 
 def loadJson(url):
     # Using request's get method to get data
@@ -28,44 +36,93 @@ def jsonParser(dic):
     for result in dic["results"]:
         print(result["title"])
 
-
-def searchAnime():
+def subscribeAnime(api_path):
     # Ask User name of Anime
     # Prepare Url for searching Anime titles
-    animeName = input("Enter Name of anime: ")
-    subUrl = "/search/anime?q=%s/Zero&page=1"%animeName
-    dic = loadJson(apiPath + subUrl)
+    anime_name = input("Enter Name of anime: ")
+    sub_url = "/search/anime?q=%s/Zero&page=1"%anime_name
+    dic = loadJson(api_path + sub_url)
     jsonParser(dic)
+    print(jsonParser(dic))
 
-def getChoice():
-    #Method to get user Input
-    try:
-        choice = int(input("Choice> "))
-    except ValueError:
-        print("Not a valid input")
-        return getChoice()
-    return choice
+def subscribeManga(api_path):
+    pass
 
+def subscribePerson(api_path):
+    pass
 
-def menu():
+def subscribeStudio(api_path):
+    pass
+
+def rmSubscribe():
+    pass
+
+def schedule(schedule_script):
+    # param, name of script to schedule
+    # check if winows or linux and call
+    # corresponding func
+    if (name=='nt'):
+        scheduleWindows(schedule_script)
+    else:
+        scheduleLinux(schedule_script)
+
+def scheduleLinux(schedule_script):
+    # takes name of script to schedule on linux
+    # schedule a ps in linux using crontab
+    # schedule script on every boot
+    cron=CronTab()
+    cmd='export DISPLAY=:0.0 && '
+    python3_path=system('which python3')
+    cmd+=(python3_path+" "+getcwd()+"/"+schedule_script) 
+    schedule=cron.new(command=cmd, comment='Anime News Notification')
+    schedule.every_reboot()
+    cron.write()
+
+def rmScheduleLinux():
+    # remove from task scheduler linux
+    cron=CronTab()
+    jobs=cron.find_comment("Anime News Notification")
+    for job in jobs:
+        cron.remove(job)
+
+def rmScheduleWindows():
+    pass
+
+def scheduleWindows():
+    pass
+
+def menu(api_path, icon_name, schedule_script):
     # Creates Menu which is shown to the user
     # And Taking input from user
     while(True):
         print("*******AnimeNotify************")
-        print("1. Search Anime ")
-        print("2. Quit")
+        print("1. Subscribe Anime ")
+        print("2. Subscribe Manga")
+        print("3. Subscribe Person")
+        print("4. Subscribe Studio")
+        print("Remove Subscription")
+        print("99. Quit")
 
-        choice = getChoice()
+        choice = int(input("Choice> "))
 
         if(choice == 1):
-            searchAnime()
-        elif(choice == 2):
+            subscribeAnime(api_path)
+        elif (choice == 2):
+            subscribeManga(api_path)
+        elif (choice == 3):
+            subscribePerson(api_path)
+        elif (choice == 4):
+            subscribeStudio(api_path)
+        elif (choice == 5):
+            rmSubscribe()
+        elif(choice == 99):
             exit()
+        else:
+            print("Invalid Choice")
             
-
 def main():
     # calling menu function
-    menu()
+    menu(API, ICON_NAME, SCHEDULE_SCRIPT)
 
 if __name__ == "__main__":
     # Call main when this python file is not imported 
