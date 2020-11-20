@@ -22,16 +22,20 @@ def loadJson(url):
         print("Error: " + str(response.status_code) + " : "+ response.reason)
         exit(1)
 
+def jsonParser(dic):
+    # takes dict as param
+    # dic has json data
+    for result in dic["results"]:
+        print(result["title"])
+
 
 def searchAnime():
     # Ask User name of Anime
     # Prepare Url for searching Anime titles
     animeName = input("Enter Name of anime: ")
     subUrl = "/search/anime?q=%s/Zero&page=1"%animeName
-    dict = loadJson(apiPath + subUrl)
-    # TODO
-    # Shivanshu
-    #jsonParser(dict)
+    dic = loadJson(apiPath + subUrl)
+    jsonParser(dic)
 
 def getChoice():
     #Method to get user Input
