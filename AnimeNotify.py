@@ -17,6 +17,24 @@ API = "https://api.jikan.moe/v3"
 ICON_NAME="" # just name no extension
 SCHEDULE_SCRIPT=""
 
+def notification(notifyTitle, notifyDescription, notifyIcon):
+    # params are notification title, descr, iconname
+    # pass full path of icon
+    # select icon type accrdg to os name
+    # urgent notification
+    notifyIcon=getcwd()+'/'+notifyIcon
+    if (name == 'nt'):
+        notifyIcon+='.ico'
+    else:
+        notifyIcon+='.png'
+    Notification(
+        title=notifyTitle,
+        description=notifyDescription,
+        icon_path=notifyIcon, # On Windows .ico is required, on Linux - .png
+        duration=5,                              # Duration in seconds
+        urgency=Notification.URGENCY_CRITICAL
+    ).send()
+
 def loadJson(url):
     # Using request's get method to get data
     try:
@@ -100,11 +118,9 @@ def menu(api_path, icon_name, schedule_script):
         print("2. Subscribe Manga")
         print("3. Subscribe Person")
         print("4. Subscribe Studio")
-        print("Remove Subscription")
+        print("5. Remove Subscription")
         print("99. Quit")
-
         choice = int(input("Choice> "))
-
         if(choice == 1):
             subscribeAnime(api_path)
         elif (choice == 2):
