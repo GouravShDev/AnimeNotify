@@ -54,22 +54,25 @@ def jsonParser(dic):
     for result in dic["results"]:
         print(result["title"])
 
-def subscribeAnime(api_path):
+def read(key):
+    # read data from keyboard
+    return(input(key+": "))
+
+def subscribeAnime(api_path, anime_name):
     # Ask User name of Anime
     # Prepare Url for searching Anime titles
-    anime_name = input("Enter Name of anime: ")
     sub_url = "/search/anime?q=%s/Zero&page=1"%anime_name
     dic = loadJson(api_path + sub_url)
     jsonParser(dic)
     print(jsonParser(dic))
 
-def subscribeManga(api_path):
+def subscribeManga(api_path, manga_name):
     pass
 
-def subscribePerson(api_path):
+def subscribePerson(api_path, person_name):
     pass
 
-def subscribeStudio(api_path):
+def subscribeStudio(api_path, studio_name):
     pass
 
 def rmSubscribe():
@@ -122,13 +125,17 @@ def menu(api_path, icon_name, schedule_script):
         print("99. Quit")
         choice = int(input("Choice> "))
         if(choice == 1):
-            subscribeAnime(api_path)
+            anime_name=read("Anime")
+            subscribeAnime(api_path, anime_name)
         elif (choice == 2):
-            subscribeManga(api_path)
+            manga_name=read("Manga")
+            subscribeManga(api_path, manga_name)
         elif (choice == 3):
-            subscribePerson(api_path)
+            person_name=read("Person")
+            subscribePerson(api_path, person_name)
         elif (choice == 4):
-            subscribeStudio(api_path)
+            studio_name=read("Studio")
+            subscribeStudio(api_path, studio_name)
         elif (choice == 5):
             rmSubscribe()
         elif(choice == 99):
