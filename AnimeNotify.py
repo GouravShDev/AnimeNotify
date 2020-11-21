@@ -51,8 +51,15 @@ def loadJson(url):
 def jsonParser(dic):
     # takes dict as param
     # dic has json data
-    for result in dic["results"]:
-        print(result["title"])
+    resultList = dic["results"]
+    i = 1
+    for item in resultList:
+        print(str(i) + ". "+ item["title"])
+        i = i + 1
+    print("\n**********************\n")
+    input("Press Enter to continue....") 
+
+
 
 def read(key):
     # read data from keyboard
