@@ -8,10 +8,8 @@ from sys import exit
 # exit with a exit code
 from pynotifier import Notification
 # create notification
-from os import name, getcwd, system
+from os import name, getcwd
 # get name of os, execute shell, get cwd
-from crontab import CronTab
-# schedule script
 
 API = "https://api.jikan.moe/v3" 
 ICON_NAME="" # just name no extension
@@ -19,9 +17,10 @@ SCHEDULE_SCRIPT=""
 
 def notification(notifyTitle, notifyDescription, notifyIcon):
     # params are notification title, descr, iconname
-    # pass full path of icon
+    # pass name of icon
     # select icon type accrdg to os name
     # urgent notification
+    # tested and completed 
     notifyIcon=getcwd()+'/'+notifyIcon
     if (name == 'nt'):
         notifyIcon+='.ico'
@@ -36,7 +35,9 @@ def notification(notifyTitle, notifyDescription, notifyIcon):
     ).send()
 
 def loadJson(url):
-    # Using request's get method to get data
+    # takes url as param
+    # make get request to given url
+    # return dict represing json data
     try:
         response = get(url)
     except Exception as e:
@@ -51,12 +52,45 @@ def loadJson(url):
 def jsonParser(dic):
     # takes dict as param
     # dic has json data
+    # prints json data
+    # tested and completed
     for result in dic["results"]:
         print(result["title"])
 
 def read(key):
+    # takes a key to ask from user
+    # returns user input
+    # tested and completed
+    # makes function more general
     # read data from keyboard
     return(input(key+": "))
+
+def collectRelatedMalID(api_path, mal_id):
+    # takes api url and a related mal_id as param
+    # return list of all related mal_id
+    # tested and completed
+    # makes request to given mal_id and get releated mal_ids
+    # even the mal_id of adaptation (maga)
+    sub_url="/anime/%i"%(mal_id)
+    print(api_path+sub_url)
+    resp=loadJson(api_path+sub_url)
+    related_data=resp['related']
+    related_mal_ids=[]
+    for datas in related_data:
+        for data in related_data[datas]:
+            temp={'type': data['type'], 'mal_id': data['mal_id']}
+            related_mal_ids.append(temp)
+    return(related_mal_ids)
+
+def collectMalID(api_path, anime_name):
+    # api link and name of anime param
+    # return topmost malid from results
+    # tested and completed
+    # search anime and get topmost mal_id from result
+    sub_url = "/search/anime?q=%s/Zero&page=1"%anime_name
+    resp = loadJson(api_path + sub_url)
+    mal_id=resp['results'][0]['mal_id']
+    return(mal_id)
 
 def subscribeAnime(api_path, anime_name):
     # Ask User name of Anime
@@ -64,7 +98,6 @@ def subscribeAnime(api_path, anime_name):
     sub_url = "/search/anime?q=%s/Zero&page=1"%anime_name
     dic = loadJson(api_path + sub_url)
     jsonParser(dic)
-    print(jsonParser(dic))
 
 def subscribeManga(api_path, manga_name):
     pass
@@ -91,20 +124,11 @@ def scheduleLinux(schedule_script):
     # takes name of script to schedule on linux
     # schedule a ps in linux using crontab
     # schedule script on every boot
-    cron=CronTab()
-    cmd='export DISPLAY=:0.0 && '
-    python3_path=system('which python3')
-    cmd+=(python3_path+" "+getcwd()+"/"+schedule_script) 
-    schedule=cron.new(command=cmd, comment='Anime News Notification')
-    schedule.every_reboot()
-    cron.write()
+    pass
 
 def rmScheduleLinux():
     # remove from task scheduler linux
-    cron=CronTab()
-    jobs=cron.find_comment("Anime News Notification")
-    for job in jobs:
-        cron.remove(job)
+    pass
 
 def rmScheduleWindows():
     pass
