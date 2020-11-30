@@ -1,0 +1,32 @@
+
+import jsonparser
+
+
+def collectRelatedMalID(api_path, mal_id):
+    # takes api url and a related mal_id as param
+    # return list of all related mal_id
+    # tested and completed
+    # makes request to given mal_id and get releated mal_ids
+    # even the mal_id of adaptation (maga)
+    sub_url="/anime/%i"%(mal_id)
+    print(api_path+sub_url)
+    resp=jsonparser.loadJson(api_path+sub_url)
+    related_data=resp['related']
+    related_mal_ids=[]
+    for datas in related_data:
+        for data in related_data[datas]:
+            temp={'type': data['type'], 'mal_id': data['mal_id']}
+            related_mal_ids.append(temp)
+    return(related_mal_ids)
+
+def collectMalID(api_path, anime_name):
+    # api link and name of anime param
+    # return topmost malid from results
+    # tested and completed
+    # search anime and get topmost mal_id from result
+    sub_url = "/search/anime?q=%s/Zero&page=1"%anime_name
+    resp = jsonparser.loadJson(api_path + sub_url)
+    mal_id=resp['results'][0]['mal_id']
+    return(mal_id)
+
+
