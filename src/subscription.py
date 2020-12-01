@@ -1,11 +1,10 @@
 import jsonparser
+import collector
 
 def subscribeAnime(api_path, anime_name):
-    # Ask User name of Anime
-    # Prepare Url for searching Anime titles
-    sub_url = "/search/anime?q=%s/Zero&page=1"%anime_name
-    dic = jsonparser.loadJson(api_path + sub_url)
-    jsonparser.jsonParser(dic)
+    # # Prepare Url for searching Anime titles
+    id = collector.collectMalID(api_path, anime_name)
+    
 
 def subscribeManga(api_path, manga_name):
     pass
