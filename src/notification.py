@@ -1,18 +1,18 @@
-from tkinter import Tk, Label, Canvas, Frame, PhotoImage
+from os import system, name
+import constants
 # show notification
 
-def genNotification(title, descr, icon, bg):
-    notice = Tk()
-    notice.title("Notification")
-    notice.configure(background='black')
-    notice.overrideredirect(True)
-    resolution=str(int(notice.winfo_screenwidth()*0.25))+"x"+str(int(notice.winfo_screenheight()*0.20))+"+"+str(int(notice.winfo_screenwidth()*0.74))+"+"+str(int(notice.winfo_screenheight()*0.75))
-    notice.geometry(resolution)
-    bg_image=PhotoImage(file = bg)
-    background_label = Label(notice, image=bg_image)
-    background_label.place(x=0, y=0, relwidth=1)
-    background_label.pack()
-    l=Label(notice, text="hello")
-    l.pack()
-    notice.mainloop()
-genNotification("Anime", "descr..", "link", "icon.png")
+def genNotificationWindows(title, descr, icon):
+    pass
+
+def genNotificationLinux(title, descr, icon):
+    # notify-send 'Hello World!' 'This is a custom notification! <a href="https://www.google.com">https://www.google.com</a>'
+    system("notify-send \""+title+"\" "+descr+" --icon=\""+icon+".png"+"\"")
+
+def genNotification(title, descr, icon):
+    if (name=='nt'):
+        genNotificationWindows(title, descr, icon)
+    else:
+        genNotificationLinux(title, descr, icon)
+constants.init()
+genNotification("Anime", "descr..", constants.ICON_NAME)
