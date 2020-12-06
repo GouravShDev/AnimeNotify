@@ -2,17 +2,17 @@ from os import system, name
 import constants
 # show notification
 
-def genNotificationWindows(title, descr, icon):
+def genNotificationWindows(title, descr, icon, link):
     pass
 
-def genNotificationLinux(title, descr, icon):
-    # notify-send 'Hello World!' 'This is a custom notification! <a href="https://www.google.com">https://www.google.com</a>'
-    system("notify-send \""+title+"\" "+descr+" --icon=\""+icon+".png"+"\"")
+def genNotificationLinux(title, descr, icon, link):
+    s="notify-send \'"+title+"\' \'"+descr+"\n <a href=\""+link+"\">read more</a>\'"+" --icon=\""+icon+".png"+"\""
+    system(s)
 
-def genNotification(title, descr, icon):
+def genNotification(title, descr, icon, link):
     if (name=='nt'):
-        genNotificationWindows(title, descr, icon)
+        genNotificationWindows(title, descr, icon, link)
     else:
-        genNotificationLinux(title, descr, icon)
-constants.init()
-genNotification("Anime", "descr..", constants.ICON_NAME)
+        genNotificationLinux(title, descr, icon, link)
+#constants.init()
+#genNotification("Anime", "descr..", constants.ICON_NAME, "https://www.google.com")

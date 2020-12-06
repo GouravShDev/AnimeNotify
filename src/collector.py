@@ -2,6 +2,7 @@ import jsonparser
 import animetitle
 import constants
 from time import sleep
+import filehandlers
 
 def collectRelatedMalID(api_path, mal_id):
     # takes api url and a related mal_id as param
@@ -33,8 +34,7 @@ def collectMalID(api_path, anime_name):
     mal_name = resp['results'][0]['title']
     print("*****SUBSCRIBE TO******")
     print(mal_name)
-    for title in collectRelatedMalID(api_path, mal_id):
-        collectNews(title.type,title.mal_id)
+    filehandlers.writeRelatedMalID(collectRelatedMalID(api_path, mal_id))
     return(mal_id)
 
 def collectNews(title_type, mal_id):
@@ -47,6 +47,6 @@ def collectNews(title_type, mal_id):
         yield(animetitle.AnimeNews(article['title'], article['intro'], article['url'], article['date']))
 
 #testing
-c=collectNews('anime', 40748)
-for i in c:
-    print(i.title)
+#c=collectNews('anime', 40748)
+#for i in c:
+#    print(i.title)

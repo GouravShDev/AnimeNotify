@@ -5,6 +5,7 @@ import menu
 
 def main():
     # calling menu function
+    constants.init()
     menu.createMenu(constants.API, constants.ICON_NAME, constants.SCHEDULE_SCRIPT)
 
 

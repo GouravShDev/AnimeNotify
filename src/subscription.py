@@ -1,10 +1,11 @@
 import jsonparser
 import collector
+import filehandlers
 
 def subscribeAnime(api_path, anime_name):
     # # Prepare Url for searching Anime titles
+    filehandlers.writeLastRunDate()
     id = collector.collectMalID(api_path, anime_name)
-    
 
 def subscribeManga(api_path, manga_name):
     pass
