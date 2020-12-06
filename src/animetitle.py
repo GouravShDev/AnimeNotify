@@ -8,6 +8,12 @@ class Title:
         self.type = type
         self.mal_id = id
         self.name = name
+    def __eq__(self, other):
+        if (self.type==other.type):
+            if (self.mal_id==other.mal_id):
+                if (self.name==other.name):
+                    return True
+        return False
 
 class AnimeNews:
     def __init__(self, title, description, link, date):

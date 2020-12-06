@@ -14,7 +14,7 @@ def createMenu(api_path, icon_name, schedule_script):
     while(True):
         clear()
         print("*******AnimeNotify************")
-        print("1. Subscribe Anime ")
+        print("1. Subscribe")
         print("2. Remove Subscription")
         print("99. Quit")
         try:
@@ -23,8 +23,8 @@ def createMenu(api_path, icon_name, schedule_script):
             print("Invalid Choice")
             continue
         if(choice == 1):
-            anime_name=(userInput.read("Anime")).lower()
-            subscription.subscribeAnime(api_path, anime_name)
+            anime_name=(userInput.read("Name")).lower()
+            subscription.subscribe(api_path, anime_name)
         elif (choice == 2):
             subscription.rmSubscribe()
         elif(choice == 99):

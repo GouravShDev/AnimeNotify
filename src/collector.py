@@ -19,7 +19,7 @@ def collectRelatedMalID(api_path, mal_id):
     for datas in related_data:
         for data in related_data[datas]:
             #print(data)
-            temp= animetitle.Title(data['type'],data['mal_id'],data['name'])
+            temp= animetitle.Title(data['type'],data['mal_id'],(data['name']).lower())
             related_mal_ids.append(temp)
     return(related_mal_ids)
 
@@ -34,7 +34,6 @@ def collectMalID(api_path, anime_name):
     mal_name = resp['results'][0]['title']
     print("*****SUBSCRIBE TO******")
     print(mal_name)
-    filehandlers.writeRelatedMalID(collectRelatedMalID(api_path, mal_id))
     return(mal_id)
 
 def collectNews(title_type, mal_id):

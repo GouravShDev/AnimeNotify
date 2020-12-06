@@ -1,11 +1,12 @@
 # Documentation of Api : https://jikan.docs.apiary.io/
-
+import schedule
 import constants
 import menu
 
 def main():
     # calling menu function
     constants.init()
+    schedule.init()
     menu.createMenu(constants.API, constants.ICON_NAME, constants.SCHEDULE_SCRIPT)
 
 
