@@ -36,7 +36,7 @@ def init():
     TMP=PATH+TMP
     if (name=="nt"):
         PATH=correctPath(PATH)
-        ICON_NAME=correctPath(ICON_NAME)
+        ICON_NAME=correctPath(ICON_NAME) + '.ico'
         SCHEDULE_SCRIPT=correctPath(SCHEDULE_SCRIPT)
         RELATED=correctPath(RELATED)
         DATE=correctPath(DATE)
