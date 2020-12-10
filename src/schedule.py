@@ -1,4 +1,4 @@
-from os import name, system
+from os import name, system, getcwd, popen
 import constants
 from pickle import dump, load
 
@@ -24,7 +24,7 @@ def schedule():
     # corresponding func
     setSubscribed(1)
     if (name=='nt'):
-        scheduleWindows(constants.SCHEDULE_SCRIPT)
+        scheduleWindows()
     else:
         scheduleLinux(constants.SCHEDULE_SCRIPT)
 
@@ -71,7 +71,18 @@ def rmScheduleLinux():
     exit(0)
 
 def rmScheduleWindows():
-    pass
+    # rm from task scheduler windows
+    command = "schtasks -delete -tn AnimeNotify -f"
+    try:
+        system("del " + constants.SUBSCRIBED)
+        system("del " + constants.BASH_SCRIPT)
+        system("del " + constants.TMP)
+    except Exception as e:
+        print(e)
+        input("Press any key to continue......")
+    popen(command)
 
-def scheduleWindows(x):
-    pass
+def scheduleWindows():
+    cwd = getcwd()
+    command = 'schtasks -create -tn "AnimeNotify" -tr "%s\schedulescript.pyw" -sc onlogon -v1' % cwd 
+    system(command)

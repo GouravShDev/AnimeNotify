@@ -12,7 +12,7 @@ def genNotificationWindows(title, descr, icon, link):
     $aContent = New-BTContent -Visual $aVisual -Launch {link} -ActivationType Protocol
     Submit-BTNotification -Content $aContent""".format(title = title,descr =descr,icon = icon,link = link)
 
-    subprocess.call('powershell.exe '+ cmd )
+    subprocess.call('powershell.exe -windowstyle hidden '+ cmd )
     pass
 
 def genNotificationLinux(title, descr, icon, link):
