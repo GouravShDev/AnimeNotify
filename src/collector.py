@@ -42,7 +42,7 @@ def collectNews(title_type, mal_id):
     url = constants.API + subUrl
     resp = jsonparser.loadJson(url)
     for article in resp['articles']:
-        sleep(1)
+        sleep(4)
         yield(animetitle.AnimeNews(article['title'], article['intro'], article['url'], article['date']))
 
 #testing

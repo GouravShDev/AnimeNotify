@@ -1,8 +1,15 @@
 import userInput
-import subscription
-import userInput
+import subscription, sys
+import userInput, ctypes
 from sys import exit
 from os import name, system
+
+def is_admin():
+    # Check for windows if admin access is available
+    try:
+        return ctypes.windll.shell32.IsUserAnAdmin()
+    except:
+        return False
 
 def clear():
     # Clear terminal showing previous outputs
@@ -23,10 +30,18 @@ def createMenu(api_path, icon_name, schedule_script):
             print("Invalid Choice")
             continue
         if(choice == 1):
-            anime_name=(userInput.read("Name")).lower()
-            subscription.subscribe(api_path, anime_name)
+            if (is_admin() or name != 'nt'):
+                anime_name=(userInput.read("Name")).lower()
+                subscription.subscribe(api_path, anime_name)
+            else:
+                # Re-run the program with admin rights
+                ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
         elif (choice == 2):
-            subscription.rmSubscribe()
+            if (is_admin() or name != 'nt'):
+                subscription.rmSubscribe()
+            else:
+                # Re-run the program with admin rights
+                ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
         elif(choice == 99):
             exit()
         else:
