@@ -83,6 +83,5 @@ def rmScheduleWindows():
     popen(command)
 
 def scheduleWindows():
-    cwd = getcwd()
-    command = 'schtasks -create -tn "AnimeNotify" -tr "%s\schedulescript.pyw" -sc onlogon -v1' % cwd 
+    command = 'schtasks -create -tn "AnimeNotify" -tr "%s" -sc onlogon -v1' % constants.SCHEDULE_SCRIPT 
     system(command)
