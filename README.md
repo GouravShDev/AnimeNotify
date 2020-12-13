@@ -1,5 +1,7 @@
 <h1 align="center">AnimeNotify</h1>
 
+<p align="center"><img width="80%" src="https://i.imgur.com/TT6amyS.png"/></p>
+
 <p align="center">
   <a href="http://forthebadge.com/" target="_blank">
     <img src="http://forthebadge.com/images/badges/built-with-love.svg"/>
