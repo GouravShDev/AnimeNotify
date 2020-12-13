@@ -10,7 +10,7 @@
 Use AnimeNotify to:
 - get latest news updates of your subscribed anime
 - CLI based
-- automatic on boot scheduling
+- automatic on boot schedule
 
 ## About OS
 Tested and working on windows and linux
