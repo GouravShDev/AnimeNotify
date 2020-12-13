@@ -1,14 +1,14 @@
 from os import system, name
 import subprocess
 import constants
-from win10toast import ToastNotifier
-import webbrowser
 # show notification
 
 def openBrowser(url):
     webbrowser.open(url)
 
 def genNotificationWindows(title, descr, icon, link):
+    from win10toast import ToastNotifier
+    import webbrowser
     # cmd = """$hdrText = New-BTText -Content '{title}'
     # $subText = New-BTText -Content '{descr}'
     # $icon = New-BTImage -Source '{icon}' -AppLogoOverride
